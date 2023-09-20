@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <ul class="btns">
+    <li>button1</li>
+    <li>button2</li>
+    <li>button3</li>
+  </ul>
+
+  <script>
+    const btns = document.querySelectorAll('.btns li');
+
+    // es6
+    /*
+    btns.forEach(btn => {
+      // 화살표함수 안쪽의 this객체는 무조건 window객체가 찍힘
+      // 화살표함수 안쪽에서는 this객체가 아예 생성이 안됨
+      // 코드블록안쪽에서 this 객체가 없을때에는 상위스코프에 있는 끌어옴 
+      btn.addEventListener('click', () => {
+        // console.log(btn)
+        // console.log(e.target)
+        console.log(this)
+      })
+    })
+    */
+    // es5
+
+    btns.forEach(function (btn) {
+      // 일반 function문으로 이벤트핸들러 연결시 내부의 this객체는 이벤트가 발생한 대상을 지치
+      // 기본 function문은 호출되는 위치에 따라 내부에 생성되는 this의 값이 변경됨
+      // this 객체가 임의로 생성되는 function밖에 bind메서드로 원하는 값으로 고정 가능
+      btn.addEventListener('click', function (e) {
+        console.log(this)
+      }.bind(this))
+    })
+  </script>
+</body>
+
+</html>
