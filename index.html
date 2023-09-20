@@ -5,6 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    li {
+      color: gray;
+      cursor: pointer;
+    }
+
+    li.on {
+      color: hotpink;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,28 +28,17 @@
   <script>
     const btns = document.querySelectorAll('.btns li');
 
-    // es6
-    /*
-    btns.forEach(btn => {
-      // 화살표함수 안쪽의 this객체는 무조건 window객체가 찍힘
-      // 화살표함수 안쪽에서는 this객체가 아예 생성이 안됨
-      // 코드블록안쪽에서 this 객체가 없을때에는 상위스코프에 있는 끌어옴 
-      btn.addEventListener('click', () => {
-        // console.log(btn)
-        // console.log(e.target)
-        console.log(this)
-      })
-    })
-    */
-    // es5
-
-    btns.forEach(function (btn) {
-      // 일반 function문으로 이벤트핸들러 연결시 내부의 this객체는 이벤트가 발생한 대상을 지치
-      // 기본 function문은 호출되는 위치에 따라 내부에 생성되는 this의 값이 변경됨
-      // this 객체가 임의로 생성되는 function밖에 bind메서드로 원하는 값으로 고정 가능
-      btn.addEventListener('click', function (e) {
-        console.log(this)
-      }.bind(this))
+    // 인수로 활성화 시킬 순번을 전달받고
+    const activation = (index) => {
+      // 일단 모든 버튼을 반복돌면서 비활성화 (초기화)
+      btns.forEach(btn => btn.classList.remove('on'))
+      // 인수로 받은 index순번의 버튼만 활성화
+      btns[index].classList.add('on')
+    }
+    // 버튼을 반복돌면서 이벤트 연결
+    btns.forEach((btn, idx) => {
+      // 이벤트가 발생하면 activation 함수 호출하면서 클릭한 순번을 인수로 전달
+      btn.addEventListener('click', () => activation(idx))
     })
   </script>
 </body>
